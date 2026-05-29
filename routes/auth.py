@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint("auth", __name__)
 
-# REGISTER
 @auth.route("/register", methods=["POST"])
 def register():
     data = request.json
@@ -25,7 +24,6 @@ def register():
     return jsonify({"message": "User registered successfully"}), 201
 
 
-# LOGIN
 @auth.route("/login", methods=["POST"])
 def login():
     data = request.json

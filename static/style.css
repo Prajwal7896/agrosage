@@ -25,20 +25,17 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== AUTH CONTAINER ===== */
 #auth-container {
     max-width: 1100px;
     margin: auto;
 }
 
-/* glass blur background animation */
 #auth-screen {
     display: flex;
     gap: 25px;
     height: 560px;
 }
 
-/* ===== AUTH CARDS ===== */
 .auth-card {
     flex: 1;
     border-radius: var(--radius);
@@ -55,7 +52,6 @@ body {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* glowing animated border */
 .auth-card::before {
     content: "";
     position: absolute;
@@ -66,18 +62,15 @@ body {
     opacity: 0.4;
 }
 
-/* LOGIN CARD */
 .login-card {
     background: linear-gradient(135deg, #ff7e5f, #feb47b);
     color: white;
 }
 
-/* REGISTER CARD */
 .register-card {
     background: rgba(255,255,255,0.85);
 }
 
-/* EXPAND ANIMATION */
 .auth-card.expanded {
     flex: 4;
     transform: translateY(-5px) scale(1.02);
@@ -90,7 +83,6 @@ body {
     filter: blur(1px);
 }
 
-/* LABEL */
 .card-label {
     font-size: 2rem;
     font-weight: 800;
@@ -98,7 +90,6 @@ body {
     transition: 0.4s;
 }
 
-/* FORM */
 .auth-form {
     margin-top: 40px;
     display: none;
@@ -120,7 +111,6 @@ body {
     }
 }
 
-/* INPUTS */
 .input-group {
     margin-bottom: 18px;
 }
@@ -141,7 +131,6 @@ input:focus {
     box-shadow: 0 0 0 4px rgba(255,126,95,0.2);
 }
 
-/* BUTTONS */
 .btn {
     width: 100%;
     padding: 14px;
@@ -168,7 +157,6 @@ input:focus {
     color: white;
 }
 
-/* ===== AI SECTION ===== */
 .ai-section {
     margin-top: 35px;
     background: var(--card);
@@ -196,7 +184,6 @@ input:focus {
     background: rgba(255,126,95,0.08);
 }
 
-/* ===== DASHBOARD ===== */
 #dashboard-screen {
     display: none;
     max-width: 1200px;
@@ -218,14 +205,12 @@ input:focus {
     opacity: 1;
 }
 
-/* GRID */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 25px;
 }
 
-/* NAV BUTTONS */
 .nav-btn {
     padding: 16px;
     border-radius: 16px;
@@ -244,7 +229,6 @@ input:focus {
 .btn-purple { background: rgba(155, 89, 182, 0.15); }
 .btn-blue { background: rgba(52, 152, 219, 0.15); }
 
-/* ===== TOAST ===== */
 #success-toast {
     position: fixed;
     top: 25px;
@@ -262,7 +246,6 @@ input:focus {
     transform: translateX(0);
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     #auth-screen {
         flex-direction: column;

@@ -52,7 +52,6 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- Auth Overlay -->
     <div id="auth-overlay" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div id="auth-box" class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md border border-slate-100">
             <div class="text-center mb-8">
@@ -68,7 +67,6 @@
                 <button onclick="showRegister()" id="tab-register" class="flex-1 py-2 rounded-lg font-bold text-sm transition-all text-slate-500">Register</button>
             </div>
 
-            <!-- LOGIN FORM -->
             <form id="login-form" onsubmit="handleAuth(event)" class="space-y-4">
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-400 uppercase ml-1">Email Address</label>
@@ -81,7 +79,6 @@
                 <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-xl font-bold shadow-lg shadow-emerald-100 transition-all">Sign In</button>
             </form>
 
-            <!-- REGISTER FORM -->
             <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div class="space-y-1">
                     <label class="text-xs font-bold text-slate-400 uppercase ml-1">Full Name</label>
@@ -100,10 +97,8 @@
         </div>
     </div>
 
-    <!-- Main Dashboard -->
     <div id="main-content" class="hidden flex h-screen overflow-hidden">
         
-        <!-- Sidebar -->
         <aside class="w-72 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
             <div class="p-8">
                 <div class="flex items-center gap-2 text-emerald-600 mb-8">
@@ -149,7 +144,6 @@
             </div>
         </aside>
 
-        <!-- Main Workspace -->
         <main class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8">
             <header class="flex justify-between items-center mb-10">
                 <div>
@@ -159,7 +153,6 @@
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Upload Section -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
@@ -206,7 +199,6 @@
                     </div>
                 </div>
 
-                <!-- Results Section -->
                 <div class="lg:col-span-7">
                     <div id="results-empty" class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl h-full min-h-[400px] flex flex-col items-center justify-center text-slate-400">
                         <i data-lucide="cpu" class="w-12 h-12 mb-4 opacity-20"></i>
@@ -273,7 +265,6 @@
         </main>
     </div>
 
-    <!-- Alert Toast -->
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass px-6 py-4 rounded-2xl shadow-2xl z-[100] translate-y-32 opacity-0 transition-all duration-500 flex items-center gap-4">
         <div id="toast-icon" class="p-2 rounded-lg"></div>
         <p id="toast-message" class="font-bold text-slate-800"></p>
@@ -281,7 +272,6 @@
     <div id="section-scan">
         <div id="main-content" class="hidden flex h-screen overflow-hidden">
         
-        <!-- Sidebar -->
         <aside class="w-72 bg-white border-r border-slate-200 flex flex-col hidden md:flex">
             <div class="p-8">
                 <div class="flex items-center gap-2 text-emerald-600 mb-8">
@@ -324,7 +314,6 @@
             </div>
         </aside>
 
-        <!-- Main Workspace -->
         <main class="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-8">
             <header class="flex justify-between items-center mb-10">
                 <div>
@@ -334,7 +323,6 @@
             </header>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Upload Section -->
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
                         <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
@@ -381,7 +369,6 @@
                     </div>
                 </div>
 
-                <!-- Results Section -->
                 <div class="lg:col-span-7">
                     <div id="results-empty" class="bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl h-full min-h-[400px] flex flex-col items-center justify-center text-slate-400">
                         <i data-lucide="cpu" class="w-12 h-12 mb-4 opacity-20"></i>
@@ -448,7 +435,6 @@
         </main>
     </div>
 
-    <!-- Alert Toast -->
     <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 glass px-6 py-4 rounded-2xl shadow-2xl z-[100] translate-y-32 opacity-0 transition-all duration-500 flex items-center gap-4">
         <div id="toast-icon" class="p-2 rounded-lg"></div>
         <p id="toast-message" class="font-bold text-slate-800"></p>
@@ -463,16 +449,10 @@
         const API_BASE = "http://127.0.0.1:5000";
         let currentFile = null;
 
-        // =========================
-        // UI OPEN
-        // =========================
         function openAgroSage() {
             document.getElementById("section-scan").classList.remove("hidden");
         }
 
-        // =========================
-        // TOAST
-        // =========================
         function showToast(msg, type = 'success') {
             const toast = document.getElementById('toast');
             const icon = document.getElementById('toast-icon');
@@ -500,9 +480,6 @@
             }, 3000);
         }
 
-        // =========================
-        // AUTH UI
-        // =========================
         function showLogin() {
             document.getElementById("login-form").classList.remove("hidden");
             document.getElementById("register-form").classList.add("hidden");
@@ -513,12 +490,8 @@
             document.getElementById("register-form").classList.remove("hidden");
         }
 
-        // =========================
-        // FIXED LOGIN SUCCESS (ONLY ONE)
-        // =========================
         function loginSuccess(user) {
 
-            // SAVE USER
             localStorage.setItem(
                 "agroUser",
                 JSON.stringify(user)
@@ -541,9 +514,6 @@
             showToast(`Welcome back, ${user.name}`);
         }
 
-        // =========================
-        // AUTH REQUESTS
-        // =========================
         async function handleAuth(e) {
             e.preventDefault();
 
@@ -592,15 +562,11 @@
 
         function handleLogout() {
 
-            // REMOVE USER
             localStorage.removeItem("agroUser");
 
             location.reload();
         }
 
-        // =========================
-        // FILE HANDLING
-        // =========================
         function handleFile(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -620,9 +586,6 @@
             reader.readAsDataURL(file);
         }
 
-        // =========================
-        // AI ANALYSIS
-        // =========================
         async function runAIAnalysis() {
 
             if (!currentFile) return;
@@ -651,9 +614,6 @@
                 if (!res.ok)
                     throw new Error(data.error);
 
-                // =========================
-                // SHOW RESULT
-                // =========================
                 document.getElementById(
                     'plant-identity'
                 ).innerText = data.prediction;
@@ -662,10 +622,6 @@
                     'confidence-score'
                 ).innerText = data.confidence;
 
-                // =========================
-                // SHOW SUGGESTION BUTTON
-                // ONLY AFTER PREDICTION
-                // =========================
                 const suggestionBtn =
                     document.getElementById('suggestions-btn');
 
@@ -674,9 +630,6 @@
                 suggestionBtn.href =
                     `/suggest-page?disease=${encodeURIComponent(data.prediction)}`;
 
-                // =========================
-                // SHOW CHEMICALS DIRECTLY
-                // =========================
                 const recommendationHTML = `
 
                 <div class="space-y-5">
@@ -756,7 +709,6 @@
             }
         }
 
-        // expose
         window.showLogin = showLogin;
         window.showRegister = showRegister;
         window.handleAuth = handleAuth;
@@ -769,7 +721,6 @@
 
         lucide.createIcons();
 
-        // CHECK SAVED LOGIN
         const savedUser = localStorage.getItem("agroUser");
 
         if (savedUser) {

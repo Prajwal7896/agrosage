@@ -25,7 +25,6 @@
 
 <div class="flex min-h-screen">
 
-    <!-- Sidebar -->
     <aside class="w-72 bg-white border-r border-slate-200 p-6 hidden md:block">
 
         <div class="flex items-center gap-2 text-emerald-600 mb-10">
@@ -55,7 +54,6 @@
         </nav>
     </aside>
 
-    <!-- Main -->
     <main class="flex-1 p-8">
 
         <div class="max-w-4xl mx-auto">
@@ -70,7 +68,6 @@
                 </p>
             </div>
 
-            <!-- Search Card -->
             <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
 
                 <label class="block text-sm font-bold text-slate-600 mb-3">
@@ -96,7 +93,6 @@
                 </div>
             </div>
 
-            <!-- Loading -->
             <div
                 id="loading"
                 class="hidden mt-8 bg-white rounded-3xl p-10 text-center border border-slate-200"
@@ -108,13 +104,11 @@
                 </h3>
             </div>
 
-            <!-- Results -->
             <div
                 id="results"
                 class="hidden mt-8 space-y-6"
             >
 
-                <!-- Chemicals -->
                 <div class="bg-white p-6 rounded-3xl border border-slate-200">
 
                     <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center gap-2">
@@ -125,7 +119,6 @@
                     <ul id="chemicalsList" class="space-y-3 text-slate-700"></ul>
                 </div>
 
-                <!-- Fertilizers -->
                 <div class="bg-white p-6 rounded-3xl border border-slate-200">
 
                     <h2 class="text-2xl font-bold text-blue-700 mb-4 flex items-center gap-2">
@@ -136,7 +129,6 @@
                     <ul id="fertilizersList" class="space-y-3 text-slate-700"></ul>
                 </div>
 
-                <!-- Organic -->
                 <div class="bg-white p-6 rounded-3xl border border-slate-200">
 
                     <h2 class="text-2xl font-bold text-orange-700 mb-4 flex items-center gap-2">
@@ -147,7 +139,6 @@
                     <ul id="organicList" class="space-y-3 text-slate-700"></ul>
                 </div>
 
-                <!-- Prevention -->
                 <div class="bg-white p-6 rounded-3xl border border-slate-200">
 
                     <h2 class="text-2xl font-bold text-red-700 mb-4 flex items-center gap-2">
@@ -172,7 +163,6 @@
 
     const API_BASE = "http://127.0.0.1:5000";
 
-    // AUTO LOAD DISEASE FROM URL
     window.addEventListener("load", () => {
 
         lucide.createIcons();
@@ -193,7 +183,6 @@
 
         const user = localStorage.getItem("agroUser");
 
-        // USER LOGGED IN
         if (user) {
 
             window.location.href = "/";

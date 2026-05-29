@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>AgroSage Suggestions</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body{
+            font-family:'Plus Jakarta Sans',sans-serif;
+            background:#f8fafc;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-72 bg-white border-r border-slate-200 p-6 hidden md:block">
+
+        <div class="flex items-center gap-2 text-emerald-600 mb-10">
+            <i data-lucide="sprout" class="w-8 h-8"></i>
+            <span class="text-2xl font-bold text-slate-800">
+                AgroSage
+            </span>
+        </div>
+
+        <nav class="space-y-2">
+
+            <a href="#"
+                onclick="openScanner()"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 hover:bg-slate-50">
+
+                <i data-lucide="scan-search"></i>
+                <span>Scanner</span>
+            </a>
+
+            <a href="/suggest-page"
+               class="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 font-semibold">
+
+                <i data-lucide="flask-conical"></i>
+                <span>Suggestions</span>
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-8">
+
+        <div class="max-w-4xl mx-auto">
+
+            <div class="mb-8">
+                <h1 class="text-4xl font-black text-slate-800">
+                    Disease Suggestions
+                </h1>
+
+                <p class="text-slate-500 mt-2">
+                    Get recommended chemicals, fertilizers and organic treatments.
+                </p>
+            </div>
+
+            <!-- Search Card -->
+            <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+
+                <label class="block text-sm font-bold text-slate-600 mb-3">
+                    Enter Predicted Disease
+                </label>
+
+                <div class="flex gap-4">
+
+                    <input
+                        type="text"
+                        id="diseaseInput"
+                        placeholder="Example: Tomato Early Blight"
+                        class="flex-1 border border-slate-200 rounded-2xl p-4 outline-none focus:border-emerald-500"
+                    >
+
+                    <button
+                        onclick="getSuggestions()"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 rounded-2xl font-bold"
+                    >
+                        Search
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div
+                id="loading"
+                class="hidden mt-8 bg-white rounded-3xl p-10 text-center border border-slate-200"
+            >
+                <div class="w-14 h-14 border-4 border-emerald-100 border-t-emerald-500 rounded-full animate-spin mx-auto mb-4"></div>
+
+                <h3 class="text-xl font-bold text-slate-800">
+                    Loading Suggestions...
+                </h3>
+            </div>
+
+            <!-- Results -->
+            <div
+                id="results"
+                class="hidden mt-8 space-y-6"
+            >
+
+                <!-- Chemicals -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200">
+
+                    <h2 class="text-2xl font-bold text-emerald-700 mb-4 flex items-center gap-2">
+                        <i data-lucide="flask-conical"></i>
+                        Recommended Chemicals
+                    </h2>
+
+                    <ul id="chemicalsList" class="space-y-3 text-slate-700"></ul>
+                </div>
+
+                <!-- Fertilizers -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200">
+
+                    <h2 class="text-2xl font-bold text-blue-700 mb-4 flex items-center gap-2">
+                        <i data-lucide="leaf"></i>
+                        Fertilizers
+                    </h2>
+
+                    <ul id="fertilizersList" class="space-y-3 text-slate-700"></ul>
+                </div>
+
+                <!-- Organic -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200">
+
+                    <h2 class="text-2xl font-bold text-orange-700 mb-4 flex items-center gap-2">
+                        <i data-lucide="trees"></i>
+                        Organic Solutions
+                    </h2>
+
+                    <ul id="organicList" class="space-y-3 text-slate-700"></ul>
+                </div>
+
+                <!-- Prevention -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200">
+
+                    <h2 class="text-2xl font-bold text-red-700 mb-4 flex items-center gap-2">
+                        <i data-lucide="shield"></i>
+                        Prevention
+                    </h2>
+
+                    <ul id="preventionList" class="space-y-3 text-slate-700"></ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+
+    lucide.createIcons();
+
+    const API_BASE = "http://127.0.0.1:5000";
+
+    // AUTO LOAD DISEASE FROM URL
+    window.addEventListener("load", () => {
+
+        lucide.createIcons();
+
+        const params = new URLSearchParams(window.location.search);
+
+        const disease = params.get("disease");
+
+        if (disease) {
+
+            document.getElementById("diseaseInput").value = disease;
+
+            getSuggestions();
+        }
+    });
+
+    function openScanner() {
+
+        const user = localStorage.getItem("agroUser");
+
+        // USER LOGGED IN
+        if (user) {
+
+            window.location.href = "/";
+
+        } else {
+
+            alert("Please login first");
+
+            window.location.href = "/";
+        }
+    }
+
+    async function getSuggestions() {
+
+        const disease = document.getElementById("diseaseInput").value;
+
+        if (!disease) {
+            alert("Enter disease name");
+            return;
+        }
+
+        document.getElementById("loading")
+            .classList.remove("hidden");
+
+        document.getElementById("results")
+            .classList.add("hidden");
+
+        try {
+
+            const response = await fetch(`${API_BASE}/suggest`, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    disease: disease
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error);
+            }
+
+            fillList("chemicalsList", data.chemicals);
+            fillList("fertilizersList", data.fertilizers);
+            fillList("organicList", data.organic);
+            fillList("preventionList", data.prevention);
+
+            document.getElementById("loading")
+                .classList.add("hidden");
+
+            document.getElementById("results")
+                .classList.remove("hidden");
+
+            lucide.createIcons();
+
+        } catch(err) {
+
+            document.getElementById("loading")
+                .classList.add("hidden");
+
+            alert(err.message);
+        }
+    }
+
+    function fillList(id, items) {
+    const el = document.getElementById(id);
+    el.innerHTML = "";
+
+    if (!items || items.length === 0) {
+        el.innerHTML = `<li class="text-slate-400 p-2">No data available</li>`;
+        return;
+    }
+
+    items.forEach(item => {
+
+        el.innerHTML += `
+            <div class="bg-slate-50 rounded-xl p-4 border border-slate-100 flex justify-between items-center">
+
+                <div>
+                    <h3 class="font-bold text-slate-800">
+                        ${item.name}
+                    </h3>
+
+                    <p class="text-sm text-slate-500">
+                        ${item.usage || ""}
+                    </p>
+
+                    <p class="text-emerald-600 font-semibold">
+                        ${item.price || ""}
+                    </p>
+                </div>
+
+                <a href="${item.buy_link}" target="_blank"
+                   class="bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700">
+                    Buy
+                </a>
+
+            </div>
+        `;
+    });
+}
+</script>
+
+</body>
+</html>

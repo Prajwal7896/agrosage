@@ -1,0 +1,36 @@
+{
+  "tomato_early_blight": {
+    "chemicals": [
+      {
+        "name": "Chlorothalonil",
+        "price": "₹400",
+        "buy_link": "https://amazon.in/search?chlorothalonil",
+        "usage": "Fungicide for blight control"
+      }
+    ],
+    "fertilizers": [
+      {
+        "name": "NPK 19:19:19",
+        "price": "₹350",
+        "buy_link": "https://amazon.in/search?npk",
+        "usage": "Boost plant growth"
+      }
+    ],
+    "organic": [
+      {
+        "name": "Neem Oil",
+        "price": "₹250",
+        "buy_link": "https://amazon.in/search?neem+oil",
+        "usage": "Natural pest control"
+      }
+    ],
+    "prevention": [
+      {
+        "name": "Crop rotation",
+        "price": "Free",
+        "buy_link": "",
+        "usage": "Prevents disease buildup"
+      }
+    ]
+  }
+}

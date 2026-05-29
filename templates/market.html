@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSage Marketplace | Premium Agri-Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #10b981;
+            border-radius: 10px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .animate-slide-in {
+            animation: slideInRight 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full z-50 glass border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <div class="bg-emerald-600 p-2 rounded-xl">
+                        <i data-lucide="sprout" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-800">Agro<span class="text-emerald-600">Sage</span></span>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8 font-medium text-slate-600">
+                    <a href="{{ url_for('index') }}" class="hover:text-emerald-600 transition-colors">
+                        Dashboard
+                    </a>
+                    <a href="{{ url_for('marketplace') }}" class="text-emerald-600">Marketplace</a>
+                    <a href="#" class="hover:text-emerald-600 transition-colors">History</a>
+                    <a href="#" class="hover:text-emerald-600 transition-colors">Profile</a>
+                </div>
+
+                <!-- Icons & Profile -->
+                <div class="flex items-center gap-5">
+                    <button onclick="toggleCart()" class="relative p-2 text-slate-600 hover:bg-slate-100 rounded-full transition-all">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                        <span id="cart-count" class="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white">0</span>
+                    </button>
+                    <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+                        <img src="https://placehold.co/100x100/10b981/ffffff?text=U" alt="User" class="w-10 h-10 rounded-full border-2 border-emerald-100 object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative overflow-hidden rounded-[3rem] bg-emerald-950 p-8 md:p-16 text-white shadow-2xl">
+                <div class="absolute top-0 right-0 w-1/3 h-full opacity-20 pointer-events-none">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                        <path fill="#ffffff" d="M44.7,-76.4C58.1,-69.2,69.2,-58.1,76.4,-44.7C83.6,-31.3,86.9,-15.7,85.1,-0.9C83.4,13.8,76.5,27.5,67.8,39.3C59.1,51.1,48.5,61,36.2,68.4C23.9,75.8,9.9,80.7,-4.1,87.8C-18.1,94.9,-36.2,104.2,-50.2,100.8C-64.2,97.4,-74.1,81.3,-81.4,66C-88.7,50.7,-93.4,36.2,-95.7,21.3C-98,6.4,-97.8,-8.9,-93.8,-23.4C-89.8,-37.9,-82.1,-51.6,-71.1,-61.7C-60.1,-71.8,-45.8,-78.3,-31.2,-82.9C-16.6,-87.5,-1.6,-90.2,13.4,-89.4C28.4,-88.6,44.7,-84.3,44.7,-76.4Z" transform="translate(100 100)" />
+                    </svg>
+                </div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block px-4 py-1.5 bg-emerald-500/20 backdrop-blur-md rounded-full text-emerald-300 text-sm font-semibold mb-6">Marketplace 2.0</span>
+                    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                        Smart Agriculture <br><span class="text-emerald-400">Marketplace</span>
+                    </h1>
+                    <p class="text-emerald-100/80 text-lg md:text-xl mb-10 max-w-lg leading-relaxed">
+                        AI-recommended fertilizers, pesticides, seeds, and tools tailored for your specific crop needs and detected diseases.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#browse" class="px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-white rounded-2xl font-bold transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-2">
+                            Browse Products <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <button class="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-2xl font-bold transition-all border border-white/20">
+                            Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 bg-emerald-50/50 border-y border-emerald-100">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800">Recommended for Tomato Early Blight</h2>
+                        <p class="text-slate-500">Products verified by our AI for your latest diagnosis.</p>
+                    </div>
+                </div>
+                <button class="text-emerald-600 font-bold hover:underline">View Diagnosis Report</button>
+            </div>
+            <div id="ai-recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- AI dynamic recommendations will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <main id="browse" class="max-w-7xl mx-auto px-4 py-16">
+        <div class="flex flex-col md:flex-row gap-8 items-center justify-between mb-12">
+            <!-- Search -->
+            <div class="relative w-full md:w-96 group">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors"></i>
+                <input type="text" id="product-search" placeholder="Search fertilizers, seeds, tools..." 
+                    class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all shadow-sm">
+            </div>
+
+            <!-- Categories -->
+            <div class="flex gap-2 overflow-x-auto pb-2 w-full md:w-auto no-scrollbar">
+                <button onclick="filterProducts('All')" class="category-btn active px-6 py-3 rounded-xl font-semibold bg-emerald-600 text-white shadow-lg shadow-emerald-600/20 transition-all">All</button>
+                <button onclick="filterProducts('Fertilizers')" class="category-btn px-6 py-3 rounded-xl font-semibold bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 transition-all">Fertilizers</button>
+                <button onclick="filterProducts('Pesticides')" class="category-btn px-6 py-3 rounded-xl font-semibold bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 transition-all">Pesticides</button>
+                <button onclick="filterProducts('Seeds')" class="category-btn px-6 py-3 rounded-xl font-semibold bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 transition-all">Seeds</button>
+                <button onclick="filterProducts('Tools')" class="category-btn px-6 py-3 rounded-xl font-semibold bg-white text-slate-600 border border-slate-200 hover:border-emerald-500 transition-all">Tools</button>
+            </div>
+
+            <!-- Sort -->
+            <select id="sort-order" onchange="sortProducts()" class="px-6 py-4 rounded-2xl bg-white border border-slate-200 focus:outline-none focus:border-emerald-500 transition-all shadow-sm cursor-pointer font-medium">
+                <option value="recommended">Recommended</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="rated">Best Rated</option>
+            </select>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Products will be dynamically loaded here -->
+        </div>
+    </main>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white shadow-2xl z-[100] transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b flex items-center justify-between bg-slate-50">
+            <div class="flex items-center gap-3">
+                <i data-lucide="shopping-bag" class="text-emerald-600"></i>
+                <h3 class="text-xl font-bold">Your Cart</h3>
+            </div>
+            <button onclick="toggleCart()" class="p-2 hover:bg-slate-200 rounded-full transition-colors">
+                <i data-lucide="x" class="w-6 h-6 text-slate-500"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-6 custom-scrollbar">
+            <!-- Cart items loaded here -->
+        </div>
+
+        <div class="p-8 border-t space-y-4 bg-white">
+            <div class="flex justify-between items-center text-slate-600">
+                <span>Subtotal</span>
+                <span id="cart-subtotal" class="font-bold text-slate-900">₹0.00</span>
+            </div>
+            <div class="flex justify-between items-center text-emerald-600 font-bold text-lg">
+                <span>Total</span>
+                <span id="cart-total">₹0.00</span>
+            </div>
+            <button onclick="checkout()" class="w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-emerald-600/20 flex items-center justify-center gap-3">
+                Checkout Now <i data-lucide="credit-card" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="product-modal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="relative glass max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl animate-slide-in custom-scrollbar">
+            <button onclick="closeModal()" class="absolute right-6 top-6 p-2 bg-white/50 hover:bg-white rounded-full transition-all z-10 shadow-sm">
+                <i data-lucide="x" class="w-6 h-6 text-slate-800"></i>
+            </button>
+            <div id="modal-content" class="p-8 md:p-12">
+                <!-- Dynamic modal content -->
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2"></div>
+
+    <footer class="bg-slate-950 text-white pt-20 pb-10 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="bg-emerald-600 p-2 rounded-xl">
+                            <i data-lucide="sprout" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tight">AgroSage</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">
+                        Empowering modern farmers with AI-driven insights and premium quality agricultural inputs.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Marketplace</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Disease Detection</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Community Forum</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Pricing Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Support</h4>
+                    <ul class="space-y-4 text-slate-400">
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Connect</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-emerald-600 transition-all"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-emerald-600 transition-all"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center hover:bg-emerald-600 transition-all"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-900 text-center text-slate-500 text-sm">
+                &copy; 2026 AgroSage Technologies. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "NPK 19-19-19 Fertilizer",
+                category: "Fertilizers",
+                price: 1250,
+                rating: 4.8,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=NPK+19-19-19",
+                description: "A water-soluble fertilizer providing equal nitrogen, phosphorus, and potassium. Ideal for initial growth stages.",
+                crops: ["Tomato", "Chili", "Cotton"],
+                diseases: ["Stunted Growth", "Yellow Leaves"],
+                dosage: "5g per liter of water",
+                recommended: true
+            },
+            {
+                id: 2,
+                name: "Mancozeb Fungicide",
+                category: "Fungicides",
+                price: 850,
+                rating: 4.9,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=Mancozeb",
+                description: "Highly effective contact fungicide for various crops. Best for managing blights and leaf spots.",
+                crops: ["Tomato", "Potato", "Grapes"],
+                diseases: ["Early Blight", "Late Blight", "Downy Mildew"],
+                dosage: "2.5g per liter of water",
+                recommended: true
+            },
+            {
+                id: 3,
+                name: "Tomato Hybrid Seeds (F1)",
+                category: "Seeds",
+                price: 450,
+                rating: 4.7,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=Tomato+Seeds",
+                description: "Disease-resistant high-yield hybrid tomato seeds. Matures in 65-70 days.",
+                crops: ["Tomato"],
+                diseases: ["Tomato Mosaic Virus"],
+                dosage: "150g per acre",
+                recommended: false
+            },
+            {
+                id: 4,
+                name: "Pressure Garden Sprayer",
+                category: "Tools",
+                price: 2100,
+                rating: 4.5,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=Garden+Sprayer",
+                description: "5-liter high-pressure sprayer with adjustable brass nozzle for precise application.",
+                crops: ["All Crops"],
+                diseases: ["N/A"],
+                dosage: "N/A",
+                recommended: false
+            },
+            {
+                id: 5,
+                name: "Organic Neem Oil",
+                category: "Pesticides",
+                price: 320,
+                rating: 4.9,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=Neem+Oil",
+                description: "Pure cold-pressed neem oil. Natural repellent for 200+ species of insects.",
+                crops: ["Vegetables", "Flowers"],
+                diseases: ["Aphids", "Whiteflies", "Spider Mites"],
+                dosage: "5ml per liter with soap solution",
+                recommended: true
+            },
+            {
+                id: 6,
+                name: "Urea Fertilizer",
+                category: "Fertilizers",
+                price: 260,
+                rating: 4.3,
+                image: "https://placehold.co/400x400/10b981/ffffff?text=Urea",
+                description: "Rich source of nitrogen for lush green leafy growth. Most widely used nitrogenous fertilizer.",
+                crops: ["Wheat", "Paddy", "Maize"],
+                diseases: ["Nitrogen Deficiency"],
+                dosage: "Depends on soil report",
+                recommended: false
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'All';
+
+        window.onload = () => {
+            renderProducts();
+            renderAIRecommendations();
+            lucide.createIcons();
+            
+            // Search listener
+            document.getElementById('product-search').addEventListener('input', (e) => {
+                renderProducts(currentCategory, e.target.value);
+            });
+        };
+
+        function renderProducts(category = 'All', search = '') {
+            currentCategory = category;
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            let filtered = products.filter(p => 
+                (category === 'All' || p.category === category) &&
+                (p.name.toLowerCase().includes(search.toLowerCase()) || p.category.toLowerCase().includes(search.toLowerCase()))
+            );
+
+            // Sorting logic
+            const sortVal = document.getElementById('sort-order').value;
+            if(sortVal === 'low') filtered.sort((a,b) => a.price - b.price);
+            if(sortVal === 'high') filtered.sort((a,b) => b.price - a.price);
+            if(sortVal === 'rated') filtered.sort((a,b) => b.rating - a.rating);
+
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card group relative bg-white rounded-[2rem] border border-slate-100 p-4 transition-all duration-500 shadow-sm hover:shadow-2xl">
+                        ${p.recommended ? '<span class="absolute top-6 left-6 z-10 bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Top Recommended</span>' : ''}
+                        <div class="relative aspect-square overflow-hidden rounded-2xl mb-6 bg-slate-50">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <button onclick="openModal(${p.id})" class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md py-3 rounded-xl font-bold translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
+                                Quick View
+                            </button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-widest">${p.category}</span>
+                                <div class="flex items-center gap-1 text-amber-500">
+                                    <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                    <span class="text-xs font-bold">${p.rating}</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-slate-800 line-clamp-1">${p.name}</h3>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-xl font-extrabold text-slate-900">₹${p.price.toLocaleString()}</span>
+                                <button onclick="addToCart(${p.id})" class="p-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-lg shadow-emerald-600/20 active:scale-90">
+                                    <i data-lucide="plus" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+            
+            // Update button styles
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if(btn.innerText === category) {
+                    btn.classList.add('bg-emerald-600', 'text-white', 'shadow-lg');
+                    btn.classList.remove('bg-white', 'text-slate-600');
+                } else {
+                    btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-lg');
+                    btn.classList.add('bg-white', 'text-slate-600');
+                }
+            });
+        }
+
+        function renderAIRecommendations() {
+            const container = document.getElementById('ai-recommendations');
+            const recommended = products.filter(p => p.recommended).slice(0, 3);
+            
+            recommended.forEach(p => {
+                container.innerHTML += `
+                    <div class="flex gap-5 p-4 bg-white rounded-3xl border-2 border-emerald-100/50 shadow-sm">
+                        <img src="${p.image}" class="w-24 h-24 rounded-2xl object-cover">
+                        <div class="flex flex-col justify-between">
+                            <div>
+                                <h4 class="font-bold text-slate-800">${p.name}</h4>
+                                <p class="text-xs text-emerald-600 font-semibold mb-1">Target: Early Blight</p>
+                                <span class="text-lg font-bold">₹${p.price}</span>
+                            </div>
+                            <button onclick="addToCart(${p.id})" class="text-emerald-600 text-sm font-bold flex items-center gap-1 hover:underline">
+                                Add to Cart <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const exists = cart.find(item => item.id === id);
+            
+            if(exists) {
+                exists.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            updateCart();
+            showToast(`${product.name} added to cart!`, 'success');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function updateCart() {
+            const itemsContainer = document.getElementById('cart-items');
+            const countBadge = document.getElementById('cart-count');
+            const totalDisplay = document.getElementById('cart-total');
+            const subtotalDisplay = document.getElementById('cart-subtotal');
+            
+            itemsContainer.innerHTML = '';
+            let total = 0;
+            let count = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                count += item.quantity;
+                itemsContainer.innerHTML += `
+                    <div class="flex gap-4 items-center bg-slate-50 p-4 rounded-2xl">
+                        <img src="${item.image}" class="w-20 h-20 rounded-xl object-cover">
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-800">${item.name}</h4>
+                            <div class="flex justify-between items-center mt-2">
+                                <span class="font-bold text-emerald-600">₹${item.price}</span>
+                                <div class="flex items-center gap-3">
+                                    <button class="text-slate-400 hover:text-red-500" onclick="removeFromCart(${item.id})">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                    <span class="bg-white px-3 py-1 rounded-lg border font-bold text-sm">Qty: ${item.quantity}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            if(cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-center space-y-4 opacity-50">
+                        <i data-lucide="shopping-cart" class="w-16 h-16"></i>
+                        <p class="font-medium">Your cart is empty</p>
+                    </div>
+                `;
+            }
+
+            countBadge.innerText = count;
+            subtotalDisplay.innerText = `₹${total.toLocaleString()}`;
+            totalDisplay.innerText = `₹${total.toLocaleString()}`;
+            lucide.createIcons();
+        }
+
+        function openModal(id) {
+            const p = products.find(item => item.id === id);
+            const modal = document.getElementById('product-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="space-y-6">
+                        <div class="aspect-square rounded-[2rem] overflow-hidden bg-slate-100 border border-slate-200">
+                            <img src="${p.image}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="aspect-square bg-slate-100 rounded-2xl"></div>
+                            <div class="aspect-square bg-slate-100 rounded-2xl"></div>
+                            <div class="aspect-square bg-slate-100 rounded-2xl"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <div class="mb-8">
+                            <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg mb-4">${p.category}</span>
+                            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">${p.name}</h2>
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="flex text-amber-400">
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <span class="text-slate-400 text-sm font-semibold">(124 Reviews)</span>
+                            </div>
+                            <p class="text-slate-600 leading-relaxed text-lg">${p.description}</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                <span class="text-xs text-emerald-600 font-bold block mb-1">Recommended for:</span>
+                                <p class="text-sm font-bold text-slate-800">${p.diseases.join(', ')}</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <span class="text-xs text-slate-500 font-bold block mb-1">Dosage:</span>
+                                <p class="text-sm font-bold text-slate-800">${p.dosage}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-end gap-6 mb-10">
+                            <div>
+                                <span class="text-slate-400 text-sm font-bold">Price</span>
+                                <div class="text-4xl font-extrabold text-slate-900">₹${p.price}</div>
+                            </div>
+                            <div class="flex-grow max-w-[150px]">
+                                <span class="text-slate-400 text-sm font-bold">Quantity</span>
+                                <div class="flex items-center border border-slate-200 rounded-xl p-1 mt-1">
+                                    <button class="w-10 h-10 hover:bg-slate-100 rounded-lg font-bold">-</button>
+                                    <input type="text" value="1" class="w-full text-center font-bold outline-none">
+                                    <button class="w-10 h-10 hover:bg-slate-100 rounded-lg font-bold">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="addToCart(${p.id})" class="w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold transition-all shadow-xl shadow-emerald-600/20 flex items-center justify-center gap-3">
+                            <i data-lucide="shopping-cart"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function checkout() {
+            if(cart.length === 0) {
+                showToast("Your cart is empty!", "error");
+                return;
+            }
+            
+            showToast("Order placed successfully!", "success");
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgClass = type === 'success' ? 'bg-emerald-900' : 'bg-red-900';
+            
+            toast.className = `${bgClass} text-white px-8 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-bold animate-slide-in mb-2`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check-circle' : 'alert-circle'}" class="w-5 h-5"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            lucide.createIcons();
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.5s ease-out';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        function filterProducts(cat) {
+            renderProducts(cat);
+        }
+
+        function sortProducts() {
+            renderProducts(currentCategory, document.getElementById('product-search').value);
+        }
+    </script>
+</body>
+</html>

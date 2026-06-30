@@ -2,560 +2,286 @@
 
 ## Overview
 
-AgroSage is an advanced Artificial Intelligence platform designed to help farmers and agricultural professionals detect crop diseases instantly using deep learning and computer vision.
+AgroSage is an AI-powered Smart Agriculture Assistant that enables farmers, agricultural experts, and organizations to detect crop diseases instantly using Deep Learning and Computer Vision. By analyzing crop leaf images, AgroSage identifies diseases with high accuracy and provides intelligent treatment recommendations, helping reduce crop losses and improve agricultural productivity.
 
-The system analyzes leaf images, identifies diseases with high accuracy, and provides actionable recommendations including:
-
-- Disease diagnosis
-- Confidence score
-- Recommended chemicals
-- Suitable fertilizers
-- Organic treatment methods
-- Preventive measures
-
-The platform aims to reduce crop losses, improve productivity, and make expert agricultural guidance accessible to everyone.
+The platform combines Artificial Intelligence, Computer Vision, Machine Learning, and modern web technologies to deliver a scalable, production-ready agricultural solution.
 
 ---
 
-## 🚀 Key Features
+# 🚀 Key Features
 
-### 🔍 AI Disease Detection
+## 🔍 AI Disease Detection
 
-Upload a crop leaf image and receive an instant diagnosis powered by a deep learning model trained on thousands of agricultural images.
+* Upload crop leaf images for instant disease diagnosis.
+* Powered by an EfficientNet-B3 Deep Learning model.
+* High-accuracy classification using transfer learning.
 
-### 🧠 Deep Learning Powered
+## 🌾 Multi-Crop Disease Classification
 
-Uses EfficientNet-B3 transfer learning architecture for high-performance image classification and disease recognition.
+Currently supports:
 
-### 🌾 Multi-Crop Support
+* Grapes
+* Sugarcane
 
-Supports disease detection for:
+Designed to easily expand to additional crops.
 
-- Grapes
-- Sugarcane
-
-Additional crops can be added easily through transfer learning.
-
-### 💊 Treatment Recommendations
+## 💊 Intelligent Treatment Recommendation
 
 Provides:
 
-- Recommended chemicals
-- Fertilizer suggestions
-- Organic treatment solutions
-- Prevention strategies
+* Recommended pesticides and chemicals
+* Fertilizer recommendations
+* Organic treatment methods
+* Disease prevention strategies
+* Crop management guidance
 
-### 📊 Confidence Scoring
+## 📊 Confidence Scoring
 
-Displays prediction confidence to help users understand model certainty.
+Displays prediction confidence for transparent AI decision-making.
 
-### 🔐 User Authentication
+## 👤 User Authentication
 
-Secure registration and login system allowing farmers to access personalized services.
+Secure authentication system with:
 
-### 📱 Responsive Modern UI
+* User Registration
+* Login
+* Password Security
+* Session Management
 
-Built with a modern responsive interface that works seamlessly across:
+## 🗄️ PostgreSQL Database
 
-- Desktop
-- Tablet
-- Mobile devices
+Stores:
 
----
+* User accounts
+* Prediction history
+* Crop information
+* Disease details
+* Treatment recommendations
+* Application logs
 
-## 🏗️ Technology Stack
+## 📈 Prediction History
 
-### Frontend
+Users can review previously analyzed crop diseases and recommendations.
 
-- HTML5
-- CSS3
-- Tailwind CSS
-- JavaScript
-- Lucide Icons
+## 📱 Responsive Web Interface
 
-### Backend
+Optimized for:
 
-- Python
-- Flask / FastAPI
-
-### AI & Machine Learning
-
-- PyTorch
-- TorchVision
-- EfficientNet-B3
-- Transfer Learning
-- Computer Vision
-
-### Data Processing
-
-- OpenDatasets
-- PIL (Python Imaging Library)
+* Desktop
+* Tablet
+* Mobile Devices
 
 ---
 
-## 🤖 AI Model Details
+# 🏗️ Technology Stack
 
-### Model Architecture
+## Frontend
+
+* HTML5
+* CSS3
+* Tailwind CSS
+* JavaScript (ES6)
+* Jinja2 Templates
+* Lucide Icons
+
+## Backend
+
+* Python 3
+* Flask
+* Flask Blueprints
+* Flask Session
+* REST API Architecture
+* Gunicorn Ready
+
+## Database
+
+* PostgreSQL
+* SQLAlchemy ORM
+* Alembic Database Migrations
+
+## Artificial Intelligence & Machine Learning
+
+* PyTorch
+* TorchVision
+* EfficientNet-B3
+* Transfer Learning
+* Deep Learning
+* Computer Vision
+
+## Data Processing
+
+* OpenDatasets
+* Pillow (PIL)
+* NumPy
+* Pandas
+
+## Deployment
+
+* Docker Ready
+* Nginx Compatible
+* Linux Server Ready
+* Cloud Deployment Ready
+
+---
+
+# 🤖 AI Model Details
+
+## Model Architecture
 
 EfficientNet-B3
 
-### Training Techniques
+## Training Techniques
 
-- Transfer Learning
-- Data Augmentation
-- Weighted Cross Entropy Loss
-- AdamW Optimizer
+* Transfer Learning
+* Data Augmentation
+* Weighted Cross Entropy Loss
+* AdamW Optimizer
+* Learning Rate Scheduling
+* Early Stopping
 
-### Image Processing
+## Image Processing Pipeline
 
-- Resize
-- Random Rotation
-- Horizontal Flip
-- Affine Transformations
-- Color Jitter
-- Normalization
+* Image Resize
+* Random Rotation
+* Horizontal Flip
+* Affine Transformation
+* Color Jitter
+* Normalization
 
-### Output
+## Model Output
 
-The model predicts:
+Predicts:
 
-- Crop Type
-- Disease Name
-- Confidence Score
-
----
-
-## 📈 Business Impact
-
-### Farmers
-
-- Detect diseases early
-- Reduce crop losses
-- Improve crop quality
-- Save treatment costs
-
-### Agricultural Experts
-
-- Faster diagnosis
-- Better treatment recommendations
-- Improved field operations
-
-### Organizations
-
-- Disease monitoring
-- Smart agriculture initiatives
-- Increased productivity
+* Crop Type
+* Disease Name
+* Confidence Score
+* Recommended Treatment
+* Fertilizer Suggestions
 
 ---
 
-## 🔬 Future Enhancements
+# 🗄️ Database Architecture (PostgreSQL)
 
-- Real-Time Camera Detection
-- Mobile Application
-- Multilingual Support
-- Voice Assistant Integration
-- Weather-Based Recommendations
-- Pest Detection Module
-- Soil Health Analysis
-- Fertilizer Optimization Engine
-- Drone Integration
-- Satellite Image Monitoring
+Main Tables:
 
----
-
-## 🎯 Project Highlights
-
-- ✅ AI-Based Disease Detection
-- ✅ EfficientNet-B3 Transfer Learning
-- ✅ Treatment Recommendation System
-- ✅ Modern Responsive UI
-- ✅ User Authentication
-- ✅ Multi-Crop Disease Classification
-- ✅ Scalable Architecture
-- ✅ Production Ready Design
+* Users
+* Crops
+* Diseases
+* Predictions
+* Treatment Recommendations
+* User Prediction History
+* Authentication Sessions
 
 ---
 
-## 📊 Performance
+# 📈 Business Impact
 
-The model is trained using transfer learning and advanced image augmentation techniques to improve generalization and classification performance.
+## Farmers
+
+* Early disease detection
+* Reduced crop losses
+* Improved crop quality
+* Lower treatment costs
+* Better farming decisions
+
+## Agricultural Experts
+
+* Faster diagnosis
+* Scientific treatment recommendations
+* Better field management
+
+## Government & Agricultural Organizations
+
+* Disease outbreak monitoring
+* Agricultural analytics
+* Smart farming initiatives
+* Productivity improvement
+
+---
+
+# 🔬 Future Enhancements
+
+* Real-Time Camera Disease Detection
+* Android & iOS Mobile Application
+* Voice Assistant
+* Regional Language Support
+* Weather-Based Recommendations
+* Pest Detection
+* Soil Health Analysis
+* Fertilizer Optimization Engine
+* Smart Irrigation Integration
+* IoT Sensor Integration
+* Drone Monitoring
+* Satellite Image Analysis
+* AI Chatbot for Farmers
+* RAG-based Agricultural Knowledge System
+
+---
+
+# 🎯 Project Highlights
+
+* ✅ AI-Based Crop Disease Detection
+* ✅ EfficientNet-B3 Transfer Learning
+* ✅ Computer Vision Pipeline
+* ✅ Flask Backend
+* ✅ PostgreSQL Database
+* ✅ SQLAlchemy ORM
+* ✅ User Authentication System
+* ✅ Prediction History
+* ✅ Treatment Recommendation Engine
+* ✅ Responsive User Interface
+* ✅ Production-Ready Architecture
+* ✅ Scalable Modular Design
+
+---
+
+# 📊 Performance
+
+The deep learning model is optimized using advanced augmentation techniques and transfer learning for robust disease classification.
 
 Evaluation Metrics:
 
-- Training Accuracy
-- Validation Accuracy
-- Cross Entropy Loss
-- Confidence Scores
+* Training Accuracy
+* Validation Accuracy
+* Precision
+* Recall
+* F1 Score
+* Cross Entropy Loss
+* Confidence Scores
 
 ---
 
-## 🌍 Vision
+# 🌍 Vision
 
-To empower farmers with AI-driven crop health monitoring solutions that improve productivity, reduce losses, and promote sustainable agriculture.
+To build an intelligent AI-driven agricultural ecosystem that empowers farmers through real-time crop health monitoring, automated disease diagnosis, and personalized treatment recommendations.
 
-AgroSage combines Artificial Intelligence, Deep Learning, and Computer Vision to create a next-generation smart farming assistant.
-
----
-
-## 👨‍💻 Author
-
-### Prajwal Sankpal
-
-AI & Machine Learning Engineer
-
-Focused on building intelligent systems using:
-
-- Artificial Intelligence
-- Machine Learning
-- Deep Learning
-- Computer Vision
-- Smart Automation
+AgroSage aims to bridge the gap between Artificial Intelligence and Agriculture by delivering scalable, affordable, and accessible smart farming solutions.
 
 ---
 
-## ⭐ Support
+# 👨‍💻 Author
 
-If you found this project useful, consider giving it a star.- Prevention strategies
+## Prajwal Sankpal
 
-📊 Confidence Scoring
+**AI & Machine Learning Engineer**
 
-Displays prediction confidence to help users understand model certainty.
+Specializing in:
 
-🔐 User Authentication
-
-Secure registration and login system allowing farmers to access personalized services.
-
-📱 Responsive Modern UI
-
-Built with a modern responsive interface that works seamlessly across:
-
-- Desktop
-- Tablet
-- Mobile devices
-
----
-
-🏗️ Technology Stack
-
-Frontend
-
-- HTML5
-- CSS3
-- Tailwind CSS
-- JavaScript
-- Lucide Icons
-
-Backend
-
-- Python
-- Flask / FastAPI Ready Architecture
-
-Artificial Intelligence
-
-- PyTorch
-- TorchVision
-- EfficientNet-B3
-- Transfer Learning
-
-Data Processing
-
-- OpenDatasets
-- PIL (Python Imaging Library)
+* Artificial Intelligence
+* Machine Learning
+* Deep Learning
+* Computer Vision
+* Generative AI
+* Large Language Models (LLMs)
+* Flask Development
+* PostgreSQL
+* Smart Agriculture
+* IoT Automation
 
 ---
 
-🤖 AI Model Details
+# ⭐ Support
 
-Model Architecture
+If you found AgroSage useful, please consider giving this repository a ⭐.
 
-EfficientNet-B3
-
-Training Techniques
-
-- Transfer Learning
-- Data Augmentation
-- Weighted Cross Entropy Loss
-- AdamW Optimizer
-
-Image Processing
-
-- Resize
-- Random Rotation
-- Horizontal Flip
-- Affine Transformations
-- Color Jitter
-- Normalization
-
-Output
-
-The model predicts:
-
-- Crop Type
-- Disease Name
-- Confidence Score
-
----
-
-📈 Business Impact
-
-Farmers
-
-- Detect diseases early
-- Reduce crop losses
-- Improve yield quality
-- Save treatment costs
-
-Agricultural Experts
-
-- Provide faster diagnosis
-- Support field operations
-- Improve recommendation quality
-
-Government & Agri Organizations
-
-- Monitor disease outbreaks
-- Improve agricultural productivity
-- Enable smart farming initiatives
-
----
-
-🔬 Future Enhancements
-
-Planned Features
-
-- Real-time Camera Detection
-- Mobile Application
-- Multilingual Support
-- Voice Assistant Integration
-- Weather-Based Recommendations
-- Pest Detection Module
-- Soil Health Analysis
-- Fertilizer Optimization Engine
-- Drone Integration
-- Satellite Image Monitoring
-
----
-
-🎯 Project Highlights
-
-- ✅ Deep Learning Based Disease Detection
-- ✅ Transfer Learning with EfficientNet-B3
-- ✅ Treatment Recommendation System
-- ✅ Modern Responsive User Interface
-- ✅ Authentication System
-- ✅ Multi-Crop Disease Classification
-- ✅ Production-Ready Architecture
-- ✅ Scalable AI Deployment Design
-
----
-
-📊 Performance
-
-The model is trained using transfer learning and optimized using advanced augmentation techniques to achieve strong classification performance on agricultural disease datasets.
-
-Performance metrics monitored include:
-
-- Training Accuracy
-- Validation Accuracy
-- Cross-Entropy Loss
-- Confidence Scoring
-
----
-
-🌍 Vision
-
-Our vision is to make AI-powered crop healthcare accessible to every farmer, regardless of location, enabling sustainable agriculture and improving global food security.
-
-By combining Artificial Intelligence, Computer Vision, and Agricultural Expertise, AgroSage aims to become a next-generation digital farming assistant.
-
----
-
-👨‍💻 Author
-
-Prajwal Sankpal
-
-AI & Machine Learning Engineer
-
-Focused on building intelligent systems that solve real-world problems through Artificial Intelligence, Deep Learning, Computer Vision, and Smart Automation.
-
----
-
-⭐ Support
-
-If you found this project useful, consider giving it a star and supporting future AI innovations in agriculture.Displays prediction confidence to help users understand model certainty.
-
-🔐 User Authentication
-
-Secure registration and login system allowing farmers to access personalized services.
-
-📱 Responsive Modern UI
-
-Built with a modern responsive interface that works seamlessly across:
-
-- Desktop
-- Tablet
-- Mobile devices
-
----
-
-🏗️ Technology Stack
-
-Frontend
-
-- HTML5
-- CSS3
-- Tailwind CSS
-- JavaScript
-- Lucide Icons
-
-Backend
-
-- Python
-- Flask / FastAPI Ready Architecture
-
-Artificial Intelligence
-
-- PyTorch
-- TorchVision
-- EfficientNet-B3
-- Transfer Learning
-- Image Augmentation
-
-Dataset Sources
-
-- Plant Disease Dataset
-- Sugarcane Disease Dataset
-
-Data Processing
-
-- OpenDatasets
-- PIL (Python Imaging Library)
-
----
-
-🤖 AI Model Details
-
-Model Architecture
-
-EfficientNet-B3
-
-Training Techniques
-
-- Transfer Learning
-- Data Augmentation
-- Weighted Cross Entropy Loss
-- AdamW Optimizer
-
-Image Processing
-
-- Resize
-- Random Rotation
-- Horizontal Flip
-- Affine Transformations
-- Color Jitter
-- Normalization
-
-Output
-
-The model predicts:
-
-- Crop Type
-- Disease Name
-- Confidence Score
-
----
-
-📈 Business Impact
-
-AgroSage helps:
-
-Farmers
-
-- Detect diseases early
-- Reduce crop losses
-- Improve yield quality
-- Save treatment costs
-
-Agricultural Experts
-
-- Provide faster diagnosis
-- Support field operations
-- Improve recommendation quality
-
-Government & Agri Organizations
-
-- Monitor disease outbreaks
-- Improve agricultural productivity
-- Enable smart farming initiatives
-
----
-
-🔬 Future Enhancements
-
-Planned Features
-
-- Real-time Camera Detection
-- Mobile Application
-- Multilingual Support
-- Voice Assistant Integration
-- Weather-Based Recommendations
-- Pest Detection Module
-- Soil Health Analysis
-- Fertilizer Optimization Engine
-- Drone Integration
-- Satellite Image Monitoring
-
----
-
-🎯 Project Highlights
-
-✅ Deep Learning Based Disease Detection
-
-✅ Transfer Learning with EfficientNet-B3
-
-✅ Treatment Recommendation System
-
-✅ Modern Responsive User Interface
-
-✅ Authentication System
-
-✅ Multi-Crop Disease Classification
-
-✅ Production-Ready Architecture
-
-✅ Scalable AI Deployment Design
-
----
-
-📊 Performance
-
-The model is trained using transfer learning and optimized using advanced augmentation techniques to achieve strong classification performance on agricultural disease datasets.
-
-Performance metrics monitored include:
-
-- Training Accuracy
-- Validation Accuracy
-- Cross-Entropy Loss
-- Confidence Scoring
-
----
-
-🌍 Vision
-
-Our vision is to make AI-powered crop healthcare accessible to every farmer, regardless of location, enabling sustainable agriculture and improving global food security.
-
-By combining Artificial Intelligence, Computer Vision, and Agricultural Expertise, AgroSage aims to become a next-generation digital farming assistant.
-
----
-
-👨‍💻 Author
-
-Prajwal Sankpal
-
-AI & Machine Learning Engineer
-
-Focused on building intelligent systems that solve real-world problems through Artificial Intelligence, Deep Learning, Computer Vision, and Smart Automation.
-
----
-
-⭐ If you found this project useful, consider giving it a star and supporting future AI innovations in agriculture.
+Your support motivates further development of AI-powered solutions for sustainable agriculture.

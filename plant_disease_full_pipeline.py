@@ -15,10 +15,16 @@ from PIL import Image
 from torchvision import models, transforms, datasets
 from torch.utils.data import DataLoader, random_split
 
+# ==========================================
+# DATASET URLS
+# ==========================================
 GRAPE_URL = "https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset"
 
 SUGARCANE_URL = "https://www.kaggle.com/datasets/prabhakaransoundar/sugarcane-disease-dataset"
 
+# ==========================================
+# PATHS
+# ==========================================
 BASE_DIR = "agri_data"
 
 GRAPE_DIR = os.path.join(BASE_DIR, "grapes")
@@ -29,6 +35,9 @@ FINAL_DIR = "agri_dataset_final"
 
 os.makedirs(BASE_DIR, exist_ok=True)
 
+# ==========================================
+# DOWNLOAD DATASETS
+# ==========================================
 def download_datasets():
 
     print("\n📥 DOWNLOADING DATASETS...\n")
@@ -37,6 +46,9 @@ def download_datasets():
 
     od.download(SUGARCANE_URL, data_dir=SUGAR_DIR)
 
+# ==========================================
+# RESET FINAL DATASET
+# ==========================================
 def prepare_dataset():
 
     if os.path.exists(FINAL_DIR):
@@ -44,6 +56,9 @@ def prepare_dataset():
 
     os.makedirs(FINAL_DIR)
 
+# ==========================================
+# COPY IMAGES
+# ==========================================
 def copy_images(src_root, crop_name):
 
     copied = 0
@@ -87,10 +102,14 @@ def copy_images(src_root, crop_name):
 
     print(f"✅ {crop_name}: {copied} images copied")
 
+# ==========================================
+# SEARCH & ORGANIZE DATASET
+# ==========================================
 def organize_dataset():
 
     print("\n📦 ORGANIZING DATASET...\n")
 
+    # FIXED PATH FOR GRAPE DATASET
     grape_real_path = os.path.join(
         GRAPE_DIR,
         "new-plant-diseases-dataset",
@@ -117,6 +136,9 @@ def organize_dataset():
 
     print(os.listdir(FINAL_DIR))
 
+# ==========================================
+# TRANSFORMS
+# ==========================================
 transform = transforms.Compose([
 
     transforms.Resize((300, 300)),
@@ -145,6 +167,9 @@ transform = transforms.Compose([
     )
 ])
 
+# ==========================================
+# MODEL
+# ==========================================
 class AgriCNN(nn.Module):
 
     def __init__(self, num_classes):
@@ -178,16 +203,23 @@ class AgriCNN(nn.Module):
 
         return x
 
+# ==========================================
+# MAIN
+# ==========================================
 if __name__ == "__main__":
 
     freeze_support()
 
+    # DOWNLOAD
     download_datasets()
 
+    # PREPARE
     prepare_dataset()
 
+    # ORGANIZE
     organize_dataset()
 
+    # DATASET
     dataset = datasets.ImageFolder(
         FINAL_DIR,
         transform=transform
@@ -196,11 +228,13 @@ if __name__ == "__main__":
     print("\n🔥 TOTAL CLASSES:\n")
     print(dataset.classes)
 
+    # SAVE CLASSES
     with open("classes.json", "w") as f:
         json.dump(dataset.classes, f)
 
     print("\n✅ classes.json SAVED")
 
+    # SPLIT
     train_size = int(0.8 * len(dataset))
 
     val_size = len(dataset) - train_size
@@ -210,6 +244,7 @@ if __name__ == "__main__":
         [train_size, val_size]
     )
 
+    # LOADERS
     train_loader = DataLoader(
         train_dataset,
         batch_size=16,
@@ -224,16 +259,19 @@ if __name__ == "__main__":
         num_workers=0
     )
 
+    # DEVICE
     device = torch.device(
         "cuda" if torch.cuda.is_available() else "cpu"
     )
 
     print(f"\n🚀 DEVICE: {device}")
 
+    # MODEL
     model = AgriCNN(
         len(dataset.classes)
     ).to(device)
 
+    # CLASS WEIGHTS
     targets = dataset.targets
 
     class_counts = Counter(targets)
@@ -247,11 +285,13 @@ if __name__ == "__main__":
 
     criterion = nn.CrossEntropyLoss(weight=weights)
 
+    # OPTIMIZER
     optimizer = optim.AdamW(
         model.parameters(),
         lr=3e-5
     )
 
+    # TRAIN
     def train():
 
         model.train()
@@ -290,6 +330,7 @@ if __name__ == "__main__":
 
         return total_loss / len(train_loader), accuracy
 
+    # VALIDATE
     def validate():
 
         model.eval()
@@ -318,6 +359,7 @@ if __name__ == "__main__":
 
         return 100 * correct / total
 
+    # TRAINING LOOP
     EPOCHS = 20
 
     best_acc = 0

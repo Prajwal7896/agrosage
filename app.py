@@ -13,9 +13,6 @@ import torch.nn as nn
 from torchvision import transforms, models
 from PIL import Image
 
-# =========================================
-# APP SETUP
-# =========================================
 app = Flask(__name__)
 
 CORS(app, supports_credentials=True)
@@ -28,9 +25,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-# =========================================
-# POSTGRES ONLY CONFIG
-# =========================================
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 print("DATABASE_URL:", DATABASE_URL)
@@ -38,7 +32,6 @@ print("DATABASE_URL:", DATABASE_URL)
 if not DATABASE_URL:
     raise Exception("❌ DATABASE_URL is not set in environment variables")
 
-# Fix Render old postgres format issue
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace(
         "postgres://",
@@ -57,18 +50,12 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 db = SQLAlchemy(app)
 
-# =========================================
-# DEVICE
-# =========================================
 device = torch.device(
     "cuda" if torch.cuda.is_available() else "cpu"
 )
 
 print(f"\n🚀 DEVICE: {device}")
 
-# =========================================
-# PATHS
-# =========================================
 MODEL_PATH = os.path.join(BASE_DIR, "agri_model.pth")
 
 CLASSES_PATH = os.path.join(BASE_DIR, "classes.json")
@@ -78,16 +65,10 @@ SOLUTION_PATH = os.path.join(
     "disease_solution.json"
 )
 
-# =========================================
-# GLOBALS
-# =========================================
 model = None
 
 class_names = {}
 
-# =========================================
-# IMAGE TRANSFORM
-# =========================================
 transform = transforms.Compose([
 
     transforms.Resize((300, 300)),
@@ -100,9 +81,6 @@ transform = transforms.Compose([
     )
 ])
 
-# =========================================
-# LOAD DISEASE SOLUTIONS
-# =========================================
 if os.path.exists(SOLUTION_PATH):
 
     with open(SOLUTION_PATH, "r") as f:
@@ -116,18 +94,12 @@ else:
 
     print("⚠️ disease_solution.json missing")
 
-# =========================================
-# LOAD AI MODEL
-# =========================================
 def load_ai_model():
 
     global model, class_names
 
     try:
 
-        # =========================
-        # CHECK CLASSES
-        # =========================
         if not os.path.exists(CLASSES_PATH):
 
             print("❌ classes.json missing")
@@ -138,7 +110,6 @@ def load_ai_model():
 
             class_names = json.load(f)
 
-        # Convert list → dict
         if isinstance(class_names, list):
 
             class_names = {
@@ -159,19 +130,12 @@ def load_ai_model():
 
         print(f"✅ Classes Loaded: {num_classes}")
 
-        # =========================
-        # CHECK MODEL FILE
-        # =========================
         if not os.path.exists(MODEL_PATH):
 
             print("❌ best_model.pth missing")
 
             return
 
-        # =========================
-        # BUILD MODEL
-        # MUST MATCH TRAINING CODE
-        # =================================
         class AgriCNN(nn.Module):
 
             def __init__(self, num_classes):
@@ -206,14 +170,8 @@ def load_ai_model():
 
                 return x
 
-        # =========================
-        # CREATE MODEL
-        # =========================
         model = AgriCNN(num_classes)
 
-        # =========================
-        # LOAD WEIGHTS
-        # =========================
         state_dict = torch.load(
             MODEL_PATH,
             map_location=device
@@ -234,9 +192,6 @@ def load_ai_model():
 
         model = None
 
-# =========================================
-# DATABASE MODELS
-# =========================================
 class User(db.Model):
 
     id = db.Column(
@@ -290,9 +245,6 @@ class ScanHistory(db.Model):
         default=time.time
     )
 
-# =========================================
-# REGISTER
-# =========================================
 @app.route("/register", methods=["POST"])
 def register():
 
@@ -347,9 +299,6 @@ def register():
             "error": str(e)
         }), 500
 
-# =========================================
-# LOGIN
-# =========================================
 @app.route("/login", methods=["POST"])
 def login():
 
@@ -402,9 +351,6 @@ def login():
             "error": str(e)
         }), 500
 
-# =========================================
-# FILE VALIDATION
-# =========================================
 ALLOWED_EXTENSIONS = {
     "png",
     "jpg",
@@ -418,26 +364,17 @@ def allowed_file(filename):
         filename.rsplit(".", 1)[1].lower() \
         in ALLOWED_EXTENSIONS
 
-# =========================================
-# PREDICT
-# =========================================
 @app.route("/predict", methods=["POST"])
 def predict():
 
     try:
 
-        # =========================
-        # MODEL CHECK
-        # =========================
         if model is None:
 
             return jsonify({
                 "error": "AI model not loaded"
             }), 500
 
-        # =========================
-        # FILE CHECK
-        # =========================
         if "file" not in request.files:
 
             return jsonify({
@@ -458,9 +395,6 @@ def predict():
                 "error": "Invalid file type"
             }), 400
 
-        # =========================
-        # SAVE FILE
-        # =========================
         filename = secure_filename(
 
             f"{int(time.time())}_{file.filename}"
@@ -473,18 +407,12 @@ def predict():
 
         file.save(path)
 
-        # =========================
-        # LOAD IMAGE
-        # =========================
         image = Image.open(path).convert("RGB")
 
         img_tensor = transform(image)
 
         img_tensor = img_tensor.unsqueeze(0).to(device)
 
-        # =========================
-        # PREDICT
-        # =========================
         with torch.no_grad():
 
             outputs = model(img_tensor)
@@ -508,12 +436,6 @@ def predict():
 
         print("🔥 Confidence:", confidence_score)
 
-        # =========================
-        # CLEAN LABEL
-        # Example:
-        # sugarcane_Red Rot
-        # → sugarcane_red_rot
-        # =========================
         disease_key = (
             prediction
             .strip()
@@ -525,25 +447,16 @@ def predict():
         print("Prediction:", prediction)
         print("Disease Key:", disease_key)
 
-        # =========================
-        # GET SOLUTIONS
-        # =========================
-        # =========================
-        # GET SOLUTIONS (FIXED)
-        # =========================
 
         import re
         from difflib import get_close_matches
 
-        # stronger normalization
         disease_key = re.sub(r"[^a-z0-9]+", "_", prediction.lower().strip())
 
         print("🔍 Searching key:", disease_key)
 
-        # direct match
         solution = DISEASE_DB.get(disease_key)
 
-        # fallback: fuzzy match if not found
         if not solution:
 
             match = get_close_matches(disease_key, DISEASE_DB.keys(), n=1, cutoff=0.6)
@@ -552,7 +465,6 @@ def predict():
                 print("⚡ Fuzzy matched:", match[0])
                 solution = DISEASE_DB.get(match[0])
 
-        # final fallback (NEVER empty UI)
         if not solution:
             print("❌ No match found in DB")
 
@@ -563,9 +475,6 @@ def predict():
                 "prevention": ["No data available"]
             }
 
-        # =========================
-        # SAVE HISTORY
-        # =========================
         history = ScanHistory(
 
             user_id=1,
@@ -581,9 +490,6 @@ def predict():
 
         db.session.commit()
 
-        # =========================
-        # RESPONSE
-        # =========================
         return jsonify({
 
             "prediction":
@@ -626,9 +532,6 @@ def predict():
             "error": str(e)
         }), 500
 
-# =========================================
-# HISTORY
-# =========================================
 @app.route("/history/<int:user_id>")
 def history(user_id):
 
@@ -649,9 +552,6 @@ def history(user_id):
         for s in scans
     ])
 
-# =========================================
-# PAGES
-# =========================================
 
 @app.route("/")
 def home():
@@ -668,9 +568,6 @@ def marketplace():
     return render_template("market.html")
 
 
-# =========================================
-# SUGGESTION PAGE
-# =========================================
 
 @app.route("/suggest-page")
 def suggest_page():
@@ -678,9 +575,6 @@ def suggest_page():
     return render_template("suggest.html")
 
 
-# =========================================
-# SUGGESTION API
-# =========================================
 
 import re
 from difflib import get_close_matches
@@ -697,18 +591,15 @@ def suggest_api():
         if not disease:
             return jsonify({"error": "No disease provided"}), 400
 
-        # STEP 1: normalize user input
         user_key = normalize(disease)
 
         print("🔍 User input key:", user_key)
 
-        # STEP 2: direct match
         if user_key in DISEASE_DB:
             solution = DISEASE_DB[user_key]
             matched = user_key
 
         else:
-            # STEP 3: fuzzy matching (AI-like behavior)
             match = get_close_matches(user_key, DISEASE_DB.keys(), n=1, cutoff=0.3)
 
             if match:
@@ -717,7 +608,6 @@ def suggest_api():
                 print("⚡ Fuzzy matched:", matched)
 
             else:
-                # STEP 4: intelligent partial match (important fix)
                 matched = None
                 for key in DISEASE_DB.keys():
                     if any(word in key for word in user_key.split("_")):
@@ -741,9 +631,6 @@ def suggest_api():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-# =========================================
-# START SERVER
-# =========================================
 if __name__ == "__main__":
 
     with app.app_context():
